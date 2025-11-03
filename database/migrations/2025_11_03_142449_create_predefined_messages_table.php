@@ -1,0 +1,31 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('predefined_messages', function (Blueprint $table) {
+            $table->id();
+            $table->string('title'); // Short label for quick identification
+            $table->text('message'); // Actual message text
+            $table->enum('type', ['general', 'appointment', 'payment', 'followup'])->default('general');
+            $table->unsignedBigInteger('created_by')->nullable(); // user_id of vet or admin
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('predefined_messages');
+    }
+};
