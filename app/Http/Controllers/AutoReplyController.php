@@ -86,30 +86,50 @@ public function getReply(Request $request)
     try {
         $message = strtolower(trim($request->input('message')));
 
-        // Exact match
-        $reply = AutoReply::whereRaw('LOWER(trigger) = ?', [$message])->first();
+        // Remove punctuation and emojis for better matching
+        $cleanedMessage = preg_replace('/[^\p{L}\p{N}\s]/u', '', $message);
 
-        if ($reply) {
-            return response()->json([
-                'success' => true,
-                'reply'=> $reply->response
-            ]);
-        }
+        // Split the message into individual words
+        $words = explode(' ', $cleanedMessage);
 
-        // Optional partial match (contains word)
-        $reply = AutoReply::whereRaw('LOWER(trigger) LIKE ?', ["%{$message}%"])->first();
+        // Fetch all possible triggers from DB once
+        $triggers = AutoReply::all();
 
-        if ($reply) {
-            return response()->json([
-                'success' => true,
-                'reply' => $reply->response
-            ]);
+        // Check for exact or partial keyword matches
+        foreach ($triggers as $trigger) {
+            $triggerText = strtolower($trigger->trigger);
+
+            // 1. Exact match
+            if ($cleanedMessage === $triggerText) {
+                return response()->json([
+                    'success' => true,
+                    'reply' => $trigger->response
+                ]);
+            }
+
+            // 2. Word-based or phrase match (e.g., trigger is in message)
+            if (str_contains($cleanedMessage, $triggerText)) {
+                return response()->json([
+                    'success' => true,
+                    'reply' => $trigger->response
+                ]);
+            }
+
+            // 3. Trigger found in any split word (e.g., "hi" in "hi, good morning")
+            foreach ($words as $word) {
+                if ($word === $triggerText) {
+                    return response()->json([
+                        'success' => true,
+                        'reply' => $trigger->response
+                    ]);
+                }
+            }
         }
 
         // Default fallback
         return response()->json([
             'success' => false,
-            'reply' => "I'm sorry, I didn't understand that. Please contact a vet for assistance.",
+            'reply' => "Sorry, we can’t respond right now. The person might be out or doing something important!",
         ], 200);
 
     } catch (\Throwable $e) {
@@ -120,4 +140,5 @@ public function getReply(Request $request)
         ], 500);
     }
 }
+
 }

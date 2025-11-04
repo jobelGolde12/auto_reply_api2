@@ -418,13 +418,6 @@
                         <div class="feature">
                             <div class="feature-icon">✓</div>
                             <div class="feature-content">
-                                <h3>Secure</h3>
-                                <p>Protected with Sanctum authentication</p>
-                            </div>
-                        </div>
-                        <div class="feature">
-                            <div class="feature-icon">✓</div>
-                            <div class="feature-content">
                                 <h3>Scalable</h3>
                                 <p>Designed to handle high volumes of requests</p>
                             </div>
@@ -441,13 +434,22 @@
                 
                 <div class="card">
                     <h2>Getting Started</h2>
-                    <p>To use the Auto Reply Chat API, you'll need to authenticate your requests using Sanctum tokens. All endpoints (except the public ones) require authentication.</p>
+                    <p>The Auto Reply Chat API is easy to use — no authentication is required for now. You can directly send requests to the available endpoints to test and integrate the chat response feature.</p>
                     
-                    <p>Start by obtaining an API token through our authentication system, then include it in the Authorization header of your requests as a Bearer token.</p>
+                    <p>To get started, simply make a <code>POST</code> request to <code>/api/chat/auto-reply</code> with a JSON body containing your message, for example:</p>
+                                 <pre>
+                    <code>{
+                     "message": "hello"
+                     }</code>
+                    </pre>
                     
-                    <p>The API follows standard HTTP response codes and returns data in JSON format. Error responses include detailed messages to help with debugging.</p>
+                    <p>The API will analyze your message and return an appropriate automated reply in JSON format. You can easily connect this to any chat interface or frontend application.</p>
                     
+                    <p>All responses follow standard HTTP status codes, and errors include descriptive messages to help with debugging and integration.</p>
+                    
+                    <p>This setup is ideal for testing or local development. Authentication and rate limiting can be added later when the API is deployed to production.</p>
                 </div>
+
             </div>
             
             <div class="api-section">
@@ -537,8 +539,8 @@
                     showTypingIndicator();
                     
                     try {
-                        const response = await fetch('/chat/auto-reply', {
-                            method: 'POST',
+                        const response = await fetch('/api/chat/auto-reply', {
+                            method: 'POST',     
                             headers: {
                                 'Content-Type': 'application/json',
                                 'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
@@ -547,7 +549,7 @@
                         });
                         
                         const data = await response.json();
-                        
+                        console.log("response: ", data);
                         // Remove typing indicator
                         hideTypingIndicator();
                         
