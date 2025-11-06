@@ -405,7 +405,7 @@
             <div class="content">
                 <div class="card">
                     <h2>About the API</h2>
-                    <p>The Auto Reply Chat API provides a robust solution for implementing intelligent automated responses in your chat applications. Whether you're building a customer support system, a virtual assistant, or any chat-based interface, our API helps you deliver contextually appropriate responses automatically.</p>
+                    <p>The Auto Reply Chat API provides a robust solution for implementing intelligent automated responses in chat applications. Whether you're building a customer support system, a virtual assistant, or any chat-based interface, our API helps you deliver contextually appropriate responses automatically.</p>
                     
                     <div class="features">
                         <div class="feature">
@@ -457,25 +457,25 @@
                 
                 <div class="endpoint">
                     <span class="method get">GET</span>
-                    <span class="path">http://127.0.0.1/auto-replies</span>
+                    <span class="path">http://127.0.0.1:8000/auto-replies</span>
                     <div class="description">Retrieve all auto-reply configurations. Returns a list of all automated responses set up in the system.</div>
                 </div>
                 
                 <div class="endpoint">
                     <span class="method post">POST</span>
-                    <span class="path">http://127.0.0.1/auto-replies</span>
+                    <span class="path">http://127.0.0.1:8000/auto-replies</span>
                     <div class="description">Create a new auto-reply configuration. Send the trigger phrases and response content in the request body.</div>
                 </div>
                 
                 <div class="endpoint">
                     <span class="method put">PUT</span>
-                    <span class="path">http://127.0.0.1/auto-replies/{id}</span>
+                    <span class="path">http://127.0.0.1:8000/auto-replies/{id}</span>
                     <div class="description">Update an existing auto-reply configuration. Replace {id} with the specific auto-reply ID you want to modify.</div>
                 </div>
                 
                 <div class="endpoint">
                     <span class="method post">POST</span>
-                    <span class="path">http://127.0.0.1/chat/auto-reply</span>
+                    <span class="path">http://127.0.0.1:8000/chat/auto-reply</span>
                     <div class="description">Get an automated response for a chat message. Send the user's message and receive the appropriate automated reply.</div>
                 </div>
             </div>

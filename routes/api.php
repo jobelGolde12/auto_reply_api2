@@ -12,3 +12,6 @@ Route::get('/user', function (Request $request) {
     Route::post('/auto-replies', [AutoReplyController::class, 'store']);
     Route::put('/auto-replies/{id}', [AutoReplyController::class, 'update']);
     Route::post('/chat/auto-reply', [AutoReplyController::class, 'getReply']);
+
+
+    

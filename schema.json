@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AutoReply",
+  "type": "array",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Primary key (auto-increment, unsigned bigint)."
+    },
+    "trigger": {
+      "type": "string",
+      "maxLength": 255,
+      "description": "Trigger word or phrase that activates the auto reply."
+    },
+    "response": {
+      "type": "string",
+      "description": "Text response returned when the trigger is matched."
+    },
+    "created_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "Timestamp when the record was created (nullable)."
+    },
+    "updated_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "Timestamp when the record was last updated (nullable)."
+    }
+  },
+  "required": ["trigger", "response"],
+  "additionalProperties": false
+}
